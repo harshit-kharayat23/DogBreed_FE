@@ -9,7 +9,7 @@ import { addUser } from '../utils/userSlice'
 const Home = () => {
     const dispatch=useDispatch();
     const navigate=useNavigate();
-    const user=useSelector(store=>store.user)
+    const user=useSelector(store=>store?.user?.loggedInUser)
     const fetchUser=async()=>{
 
       try{
@@ -24,9 +24,10 @@ const Home = () => {
     }
 
     useEffect(()=>{
-      if(user.length==0){
-        fetchUser();
-      }
+      if (!user) {
+      fetchUser();
+    }
+
 
     },[])
 

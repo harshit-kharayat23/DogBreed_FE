@@ -9,6 +9,7 @@ import PredictorSearchBar from './components/PredictorSearchBar'
 import Login from './components/Login'
 import Profile from './components/Profile'
 import SignUp from './components/SignUp'
+import QRgeneration from './components/QRgeneration'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
                <Route path='/login' element={<Login/>}/>
               <Route path='/signup' element={<SignUp/>}/>
                <Route path='/profile' element={<Profile/>}/>
+                <Route path='/qrGenerator' element={<QRgeneration/>}/>
 
               </Route>
 

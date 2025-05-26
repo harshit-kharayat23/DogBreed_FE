@@ -1,16 +1,19 @@
-import React from 'react'
-import EditProfile from './EditProfile'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import EditProfile from './EditProfile';
+import UserCard from './UserCard';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
+  const user = useSelector(store => store?.user?.loggedInUser);
 
-  const user=useSelector(store=>store.user);
+
   return (
-    user && (<div>
-      <EditProfile user={user}/>
-    </div>
+    user && (
+      <div className="flex justify-center gap-10 items-start p-10">
+        <EditProfile user={user}/>
+      </div>
     )
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

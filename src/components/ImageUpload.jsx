@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { FiUploadCloud } from "react-icons/fi"; // upload icon
+import { FiUploadCloud } from "react-icons/fi"; 
 
 export default function ImageUpload() {
   const [image, setImage] = useState(null);
@@ -21,7 +21,7 @@ export default function ImageUpload() {
     if (!image) return;
     setLoading(true);
     const formData = new FormData();
-    formData.append("file", image);
+    formData.append("image", image); // 🟢 MATCHES Flask now
 
     try {
       const response = await axios.post(
@@ -49,35 +49,33 @@ export default function ImageUpload() {
 
         {/* Upload Box */}
         <label
-  htmlFor="fileUpload"
-  className="cursor-pointer border-2 border-dashed border-blue-400 rounded-lg px-6 py-10 flex items-center justify-center text-gray-600 hover:border-blue-500 transition w-full h-64"
->
-  {preview ? (
-    <img
-      src={preview}
-      alt="Preview"
-      className="object-cover w-full h-full rounded-lg"
-    />
-  ) : (
-    <div className="flex flex-col items-center justify-center">
-      <FiUploadCloud className="text-4xl mb-4 text-blue-500" />
-      <p className="text-lg font-medium">Drop image or click to select</p>
-      <p className="text-sm text-gray-500 mt-1">
-        JPG, PNG, BMP, or WEBP
-      </p>
-    </div>
-  )}
-  <input
-    type="file"
-    id="fileUpload"
-    accept="image/*"
-    onChange={handleImageChange}
-    className="hidden"
-  />
-</label>
+          htmlFor="fileUpload"
+          className="cursor-pointer border-2 border-dashed border-blue-400 rounded-lg px-6 py-10 flex items-center justify-center text-gray-600 hover:border-blue-500 transition w-full h-64"
+        >
+          {preview ? (
+            <img
+              src={preview}
+              alt="Preview"
+              className="object-cover w-full h-full rounded-lg"
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center">
+              <FiUploadCloud className="text-4xl mb-4 text-blue-500" />
+              <p className="text-lg font-medium">Drop image or click to select</p>
+              <p className="text-sm text-gray-500 mt-1">
+                JPG, PNG, BMP, or WEBP
+              </p>
+            </div>
+          )}
+          <input
+            type="file"
+            id="fileUpload"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+          />
+        </label>
 
-
-      
         {/* Upload Button */}
         <button
           onClick={handleUpload}

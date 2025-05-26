@@ -1,137 +1,121 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import UserCard from './UserCard';
 
-const EditProfile = ({user}) => {
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [age, setAge] = useState(user.age);
-  const [gender, setGender] = useState(user.gender);
-  const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
+const EditProfile = ({ user }) => {
+  const [firstName, setFirstName] = useState(user?.firstName);
+  const [lastName, setLastName] = useState(user?.lastName);
+  const [age, setAge] = useState(user?.age);
+  const [gender, setGender] = useState(user?.gender);
+  const [photoUrl, setPhotoUrl] = useState(user?.photoUrl || '');
+  const [dogBreed, setDogBreed] = useState(user?.dogBreed || '');
+  const [dogAge, setDogAge] = useState(user?.dogAge || '');
+  const [dogGender, setDogGender] = useState(user?.dogGender || '');
+  const [dogName, setDogName] = useState(user?.dogName || '');
   const [errorMsg, setErrorMsg] = useState('');
   const [toast, setShowToast] = useState(false);
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleEditProfile = async () => {
     try {
       setErrorMsg('');
-      const res = await axios.put(
-        import.meta.env.VITE_BASE_URL + '/edit-profile',
+      const res = await axios.patch(
+        import.meta.env.VITE_BASE_URL+ '/profile/update/'+user._id,
         {
           firstName,
           lastName,
           age,
           gender,
           photoUrl,
+          dogName,
+          dogBreed,
+          dogAge,
+          dogGender,
         },
         { withCredentials: true }
       );
-
+      console.log(res.data.data);
       dispatch(addUser(res?.data?.data));
       setShowToast(true);
-
-      setTimeout(() => {
-        setShowToast(false);
-        navigate('/profile'); // Change to desired page
-      }, 2500);
+      setTimeout(() => setShowToast(false), 2500);
     } catch (err) {
+      console.log(err);
       setErrorMsg(err?.response?.data || 'Something went wrong.');
     }
   };
 
   return (
-    <div className='flex justify-center items-center'>
-    <div className="flex justify-center items-center my-20 mx-10">
-      {toast && (
-        <div className="toast toast-top toast-center z-50">
-          <div className="alert alert-success shadow-lg">
-            <span>✅ Profile updated successfully!</span>
+    <div className="flex flex-col lg:flex-row justify-center items-start gap-10 px-6 lg:px-20 py-10 bg-gradient-to-br from-gray-50 to-white min-h-screen">
+      {/* Edit Form */}
+      <div className="w-full max-w-xl bg-white shadow-xl rounded-3xl p-8 border border-gray-200">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Edit Profile</h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Form Fields */}
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">First Name</label>
+            <input className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
           </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Last Name</label>
+            <input className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Your Age</label>
+            <input className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" type="number" value={age} onChange={(e) => setAge(e.target.value)} />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Your Gender</label>
+            <input className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" type="text" value={gender} onChange={(e) => setGender(e.target.value)} />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Dog's Name</label>
+            <input className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" type="text" value={dogName} onChange={(e) => setDogName(e.target.value)} />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Dog's Breed</label>
+            <input className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" type="text" value={dogBreed} onChange={(e) => setDogBreed(e.target.value)} />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Dog's Age</label>
+            <input className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" type="number" value={dogAge} onChange={(e) => setDogAge(e.target.value)} />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Dog's Gender</label>
+            <input className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" type="text" value={dogGender} onChange={(e) => setDogGender(e.target.value)} />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-600 mb-1">Profile Photo URL</label>
+            <input className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400" type="text" value={photoUrl} onChange={(e) => setPhotoUrl(e.target.value)} />
+          </div>
+        </div>
+
+        {errorMsg && <p className="text-red-500 text-sm mt-5">{errorMsg}</p>}
+
+        <button className="mt-8 w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold py-3 rounded-xl hover:from-blue-600 hover:to-indigo-600 transition duration-300" onClick={handleEditProfile}>
+           Save Changes
+        </button>
+      </div>
+
+      {/* Live Preview */}
+      <UserCard user={{ firstName, lastName, age, gender, photoUrl, dogBreed, dogAge, dogGender, dogName }} />
+
+      {toast && (
+        <div className="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-xl shadow-xl z-50 animate-bounce">
+          Profile updated successfully!
         </div>
       )}
-
-      <div className="card card-dash bg-base-300 w-96 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title justify-center text-xl mb-4">Edit Profile</h2>
-
-          {/* First Name */}
-          <label className="text-sm font-semibold text-gray-700 mb-1">First Name</label>
-          <label className="input validator mb-3">
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </label>
-
-          {/* Last Name */}
-          <label className="text-sm font-semibold text-gray-700 mb-1">Last Name</label>
-          <label className="input validator mb-3">
-            <input
-              type="text"
-
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </label>
-
-          {/* Age */}
-          <label className="text-sm font-semibold text-gray-700 mb-1">Age</label>
-          <label className="input validator mb-3">
-            <input
-              type="number"
-
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-            />
-          </label>
-
-          {/* Gender */}
-          <label className="text-sm font-semibold text-gray-700 mb-1">Gender</label>
-          <select
-            className="select select-bordered w-full mb-3"
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-          >
-            <option disabled value="">
-              Select Gender
-            </option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Others</option>
-          </select>
-
-          {/* Photo URL */}
-          <label className="text-sm font-semibold text-gray-700 mb-1">Photo URL</label>
-          <label className="input validator mb-3">
-            <input
-              type="text"
-              placeholder="Profile Photo URL"
-              value={photoUrl}
-              onChange={(e) => setPhotoUrl(e.target.value)}
-            />
-          </label>
-
-          {/* Error Message */}
-          {errorMsg && (
-            <p className="text-red-500 text-sm mt-1">{errorMsg}</p>
-          )}
-
-          {/* Submit Button */}
-          <div className="card-actions justify-center my-4">
-            <button className="btn btn-primary w-full" onClick={handleEditProfile}>
-              Save Changes
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <UserCard user={user}/>
     </div>
   );
 };

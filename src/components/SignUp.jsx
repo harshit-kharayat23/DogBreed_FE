@@ -3,19 +3,19 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [emailId, setEmailId] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [emailId, setEmailId] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const navigate = useNavigate();
 
   const handleSignUp = async () => {
     try {
-      setErrorMsg("");
+      setErrorMsg('');
       const res = await axios.post(
-        import.meta.env.VITE_BASE_URL + "/signup",
+        import.meta.env.VITE_BASE_URL + '/signup',
         {
           firstName,
           lastName,
@@ -24,91 +24,89 @@ const SignUp = () => {
         },
         { withCredentials: true }
       );
-      console.log(res);
 
-      navigate("/login");
-     
+      console.log(res);
+      navigate('/login');
     } catch (err) {
-      setErrorMsg(err?.response?.data || "Sign up failed");
+      setErrorMsg(err?.response?.data || 'Sign up failed');
     }
   };
 
   return (
-    <div className="flex justify-center items-center my-25">
-      <div className="card card-dash bg-base-300 w-full max-w-md shadow-lg">
-        <div className="card-body">
-          <h2 className="card-title justify-center text-xl mb-4">Create Account</h2>
+    <div className="min-h-screen flex justify-center items-center bg-gray-100 text-gray-900">
+      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-md">
+        <h2 className="text-2xl font-semibold text-center mb-6">Create Account</h2>
 
-          {/* First Name */}
-          <div className="mb-2">
-            <label className="block mb-1 text-sm font-medium">First Name</label>
-            <input
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="input input-bordered w-full"
-            />
-          </div>
+        {/* First Name */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1">First Name</label>
+          <input
+            type="text"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-          {/* Last Name */}
-          <div className="mb-2">
-            <label className="block mb-1 text-sm font-medium">Last Name</label>
-            <input
-              type="text"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="input input-bordered w-full"
-            />
-          </div>
+        {/* Last Name */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1">Last Name</label>
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-          {/* Email */}
-          <div className="mb-2">
-            <label className="block mb-1 text-sm font-medium">Email</label>
-            <input
-              type="email"
-              placeholder="mail@site.com"
-              value={emailId}
-              onChange={(e) => setEmailId(e.target.value)}
-              className="input input-bordered w-full"
-            />
-          </div>
+        {/* Email */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1">Email</label>
+          <input
+            type="email"
+            placeholder="mail@site.com"
+            value={emailId}
+            onChange={(e) => setEmailId(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-          {/* Password */}
-          <div className="mb-2">
-            <label className="block mb-1 text-sm font-medium">Password</label>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input input-bordered w-full"
-            />
-          </div>
+        {/* Password */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1">Password</label>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-          {/* Error Message */}
-          {errorMsg && (
-            <p className="text-red-500 text-sm mt-1">{errorMsg}</p>
-          )}
+        {/* Error Message */}
+        {errorMsg && (
+          <p className="text-sm text-red-500 mb-4">{errorMsg}</p>
+        )}
 
-          {/* Submit Button */}
-          <div className="mt-4">
-            <button className="btn btn-primary w-full" onClick={handleSignUp}>
-              Sign Up
-            </button>
-          </div>
+        {/* Sign Up Button */}
+        <button
+          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+          onClick={handleSignUp}
+        >
+          Sign Up
+        </button>
 
-          {/* Redirect to Login */}
-          <div className="text-sm text-center mt-3">
-            Already have an account?{" "}
-            <span
-              className="text-blue-500 cursor-pointer"
-              onClick={() => navigate("/login")}
-            >
-              Login
-            </span>
-          </div>
+        {/* Redirect to Login */}
+        <div className="text-sm text-center mt-4">
+          Already have an account?{' '}
+          <span
+            className="text-blue-600 font-medium cursor-pointer hover:underline"
+            onClick={() => navigate('/login')}
+          >
+            Login
+          </span>
         </div>
       </div>
     </div>
