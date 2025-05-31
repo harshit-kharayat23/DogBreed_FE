@@ -1,5 +1,5 @@
 export const getFixedPrompt = ({ dogBreed, dogAge, dogGender }) => {
-  if (dogBreed.length==0 || !dogAge) {
+  if (!dogBreed || !dogAge) {
     return `
 👋 To help you better, please tell me your dog's breed and age.
 
@@ -20,5 +20,6 @@ Since the dog is a ${dogAge}-year-old ${dogGender?.toLowerCase() || ""} ${dogBre
 - Say "This may require urgent veterinary attention" if needed.
 - Avoid excessive formatting (like **bold**) or emojis.
 - Be calm, clear, and helpful.
+- **Do not include any disclaimers, AI notices, or medical advice disclaimers at the end.**
 `;
 };
