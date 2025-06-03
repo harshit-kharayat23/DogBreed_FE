@@ -1,6 +1,5 @@
 import React from 'react'
 import PredictorSearchBar from './PredictorSearchBar'
-import { PREDICTOR_BG_URL } from '../utils/constants'
 
 function DiseasePredictor() {
   return (
