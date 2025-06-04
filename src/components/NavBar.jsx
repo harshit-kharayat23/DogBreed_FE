@@ -25,7 +25,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="w-full bg-white text-black shadow-md py-3 px-4 flex items-center justify-between">
+    <div className="sticky top-0 z-50 w-full bg-white text-black shadow-md py-3 px-4 flex items-center justify-between">
       <div className="flex items-center space-x-4 flex-1">
         <h1 className="text-3xl font-bold hover:text-gray-700 transition cursor-pointer select-none">
           Bark <span className="text-[#F83002]">NET</span>
@@ -90,7 +90,10 @@ const NavBar = () => {
                   <li>
                     <Button variant="link" className="w-full justify-start flex items-center gap-2 py-2">
                       <Settings className="w-4 h-4" />
-                      Settings
+                       <Link to="/body" className="flex items-center gap-2 py-2">
+                        
+                        Home
+                      </Link>
                     </Button>
                   </li>
                   <li>

@@ -33,7 +33,7 @@ function Body() {
       </div>
 
       {/* Image Upload Section */}
-      <div className="flex justify-center px-6 pt-0 pb-12 md:pb-16">
+      <div className="flex justify-center px-6 pt-0  pb-12 md:pb-16">
         <div className="w-full max-w-md">
           <ImageUpload />
         </div>
